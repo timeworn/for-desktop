@@ -3,7 +3,7 @@ import { Menu, Tray, nativeImage } from "electron";
 import trayIconAsset from "../../assets/desktop/icon.png?asset";
 import { version } from "../../package.json";
 
-import { mainWindow, quitApp } from "./window";
+import { mainWindow, quitApp, showServerPicker } from "./window";
 
 // internal tray state
 let tray: Tray = null;
@@ -47,6 +47,11 @@ export function updateTrayMenu() {
             enabled: false,
           },
         ]),
+      },
+      {
+        label: "Change Stoat Server",
+        type: "normal",
+        click: showServerPicker,
       },
       { type: "separator" },
       {

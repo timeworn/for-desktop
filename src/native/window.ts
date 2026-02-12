@@ -25,6 +25,10 @@ const windowIcon = nativeImage.createFromDataURL(windowIconAsset);
 
 // windowIcon.setTemplateImage(true);
 
+export function showServerPicker() {
+  mainWindow.loadFile(join(__dirname, "public/homeserver.html"));
+}
+
 ipcMain.on("updateHomeserver", (e, args) => {
   config.homeserver = args;
   config.sync();
@@ -65,15 +69,13 @@ export function createMainWindow() {
   }
 
   // load the entrypoint
-  if(config.homeserver == "") //user has yet to set a host
-  {
-    mainWindow.loadFile(join(__dirname, "public/homeserver.html"));
-  }
-  else
-  {
+  if (config.homeserver == "") {
+    //user has yet to set a host
+    showServerPicker();
+  } else {
     mainWindow.loadURL(config.homeserver);
   }
-  
+
   // minimise window to tray
   mainWindow.on("close", (event) => {
     if (!shouldQuit && config.minimiseToTray) {
