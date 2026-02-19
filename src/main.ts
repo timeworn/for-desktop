@@ -1,6 +1,6 @@
 import { IUpdateInfo, updateElectronApp } from "update-electron-app";
 
-import { BrowserWindow, app, shell, Notification } from "electron";
+import { BrowserWindow, Notification, app, shell } from "electron";
 import started from "electron-squirrel-startup";
 
 import { autoLaunch } from "./native/autoLaunch";
@@ -26,17 +26,17 @@ const acquiredLock = app.requestSingleInstanceLock();
 
 const onNotifyUser = (_info: IUpdateInfo) => {
   const notification = new Notification({
-    title: 'Update Available',
-    body: 'Restart the app to install the update.',
-    silent: true
-  })
+    title: "Update Available",
+    body: "Restart the app to install the update.",
+    silent: true,
+  });
 
-  notification.show()
-}
+  notification.show();
+};
 
 if (acquiredLock) {
   // start auto update logic
-  updateElectronApp({onNotifyUser})
+  updateElectronApp({ onNotifyUser });
 
   // create and configure the app when electron is ready
   app.on("ready", () => {
@@ -54,7 +54,7 @@ if (acquiredLock) {
 
     // Windows specific fix for notifications
     if (process.platform === "win32") {
-      app.setAppUserModelId("chat.stoat.notifications");
+      app.setAppUserModelId("com.squirrel.Stoat.stoat-desktop");
     }
   });
 
