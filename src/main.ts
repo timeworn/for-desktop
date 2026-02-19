@@ -40,15 +40,17 @@ if (acquiredLock) {
 
   // create and configure the app when electron is ready
   app.on("ready", () => {
+    // create window and application contexts
+    createMainWindow();
+
     // enable auto start on Windows and MacOS
     if (config.firstLaunch) {
       if (process.platform === "win32" || process.platform === "darwin") {
         autoLaunch.enable();
       }
+      config.firstLaunch = false;
     }
 
-    // create window and application contexts
-    createMainWindow();
     initTray();
     initDiscordRpc();
 
